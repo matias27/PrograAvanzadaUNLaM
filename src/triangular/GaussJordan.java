@@ -9,6 +9,7 @@ public class GaussJordan implements Triangulador
 	public MatrizMath triangular(MatrizMath m) throws Exception
 	{
 		//int[] size = m.
+		// asdf
 		return new MatrizMath(2, 2);
 	}
 	
