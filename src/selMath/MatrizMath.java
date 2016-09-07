@@ -77,6 +77,14 @@ public class MatrizMath {
 			}
 		}
 	}
+	/* CLONE */ 	
+	public MatrizMath clone(){
+		MatrizMath obj = new MatrizMath (this.filas,this.columnas);
+		for(int i = 0; i < this.filas; i++)
+			for(int j=0;j<this.columnas;j++)
+				obj.matriz[i][j] = this.matriz[i][j];
+		return obj;
+	}
 	
 	/* SETTERS */
 	public void setValorMatriz(int fila, int columna, double valor) {
@@ -181,38 +189,62 @@ public class MatrizMath {
 		return aux;
 	}
 	
-	public double determinante() throws Exception{
-	/*	
-		if(this.filas != this.columnas)
-			throw new Exception ("El nro de filas debe ser igual al nro de columnas.");
-		double suma=0;		
-		for(int i = 0 ; i < this.filas ; i++){
-			double[]
-			for(int j = 0; j < this.columnas ; j++){
-				
+	public double determinante() throws Exception
+	{
+		double det = 0;
+		if(this.filas == this.columnas)		{
+			for(int i = 0; i < this.filas ; i++){
+				double detA = 1, detB = 1;
+				for(int j = 0; j < this.filas ; j++)				{
+					detA *= this.matriz[j][(i + j) % this.filas];
+					detB *= this.matriz[j][((this.filas + this.columnas - 1) - i - j) % this.filas];
+				}
+				det += detA - detB;
 			}
 		}
-		return resultado;
-		*/
-		double nada=0;
-		return nada;
+		else		{
+			throw new Exception("No se puede calcular la determinante de una matriz no cuadrada.");
+		}
+		
+        return det;
+    }
+	
+	/* NO OBLIGATORI PERO NECESARIO LCDTM*/ 
+	public MatrizMath identidad() throws Exception{
+		MatrizMath aux = new MatrizMath(this.filas, this.columnas);
+		for(int i = 0 ; i < aux.filas ; i++){
+			for(int j = 0; j < aux.columnas ; j++){
+				 if(i == j){
+					 aux.matriz[i][j] = 1;
+				 } else {
+					 aux.matriz[i][j] = 0;
+				 }
+			}
+		}
+		return aux;
 	}
 	
 	
 	/* VER COMO MIERDA SE RESUELVE*/ 
 	public MatrizMath inversa() throws Exception {
-		MatrizMath aux = new MatrizMath(this.filas, this.columnas);
+		MatrizMath auxA = this.clone();
+		MatrizMath auxB = this.identidad();
+		double valAux;
 		if(this.filas != this.columnas)
 			throw new Exception ("El nro de filas debe ser igual al nro de columnas.");
 		for(int i = 0 ; i < this.filas ; i++){
+			valAux = 1;
 			for(int j = 0; j < this.columnas ; j++){
-				
+				if(i == j){
+					valAux = this.matriz[i][j];
+				}
+				// MODIFICO LA COPIA DE THIS
+				auxA.matriz[i][j] = auxA.matriz[i][j]/valAux;
+				// MODIFICO LA IDENTIDAD PARA OBTENER LUEGO EL RESULTADO
+				auxB.matriz[i][j] = auxB.matriz[i][j]/valAux;
 			}
 		}
-		
-		
-		
-		return aux;
+		return auxB;
 	}
 	
 	/* Normas */

@@ -26,12 +26,11 @@ public class SelMath {
 		while(sc.hasNextInt()){
 			int k=sc.nextInt();
 			this.resultado[k].setVectorValor(k,k);
-		}
-		
-		sc.close();
-		
+		}		
+		sc.close();		
 	}
 	
+	// esta tiene que ir guardada en un archivo
 	public void mostrarResultados(){
 		for(int i=0; i<this.dimension;i++)
 			for(int j=0; j<this.dimension;j++){
@@ -39,6 +38,8 @@ public class SelMath {
 			}
 		
 	}
+	
+
 	
 	
 }
